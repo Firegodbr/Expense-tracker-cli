@@ -22,6 +22,9 @@ class ExpenseTracker:
             with self._file_path.open('r') as f:
                 self._total_lines = len(f.readlines())
     
+    def __str__(self):
+        return f"ExpenseTracker(file_path={self._file_path}, total_lines={self._total_lines})"
+    
     def get_total_lines(self):
         """Get total lines on file"""
         return self._total_lines
@@ -57,3 +60,21 @@ class ExpenseTracker:
             self._total_lines -= 1
             return True
         return False
+    
+    def find_expense(self, line_pos: int) -> str:
+        if line_pos > self._total_lines or line_pos < 1:
+            raise ValueError("Number given is not in the range of values added")
+        line = ""
+        with self._file_path.open("r") as f:
+            line = f.readlines()[line_pos-1]
+        return line.strip()
+    
+    def update_expense(self, line_pos: int, new_value: str)->bool:
+        if line_pos > self._total_lines or line_pos < 1:
+            raise ValueError("Line out of range")
+        lines = self._file_path.read_text().splitlines()
+        # Replace the line (if the line index is valid)
+        lines[line_pos-1] = new_value
+        # Write the updated lines back to the file
+        self._file_path.write_text("\n".join(lines))
+        return True
