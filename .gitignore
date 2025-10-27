@@ -1,0 +1,5 @@
+.venv
+expenses/
+.pytest_cache
+.coverage
+__pycache__/
