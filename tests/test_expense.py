@@ -107,9 +107,12 @@ class TestExpenseUpdate:
         """Test update value of a expense"""
         product = ProductFactory()
         product_expense = f"{product.name}- {product.price} - {product.price}"
-        tracker.add_expense(product_expense)
-        assert tracker.update_expense(1, product_expense)
-        assert tracker.find_expense(1) == product_expense
+        line = tracker.add_expense(product_expense)
+        assert tracker.find_expense(line) == product_expense
+        new_product = ProductFactory()
+        new_product_expense = f"{new_product.name}- {new_product.price} - {new_product.price}"
+        assert tracker.update_expense(line, new_product_expense)
+        assert tracker.find_expense(line) == new_product_expense
 
     def test_expense_update_not_found(self, tracker_with_files: ExpenseTracker):
         """Test update value of a expense that does not exist"""
