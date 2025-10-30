@@ -42,6 +42,7 @@ class ExpenseTracker:
             # f.write(str(line) + "\t" + "\"" + expense + "\"" + "\n")
             f.write(expense + "\n")
         self._total_lines += 1
+        print(f"Expense added: {expense}")
         return self._total_lines
     
     def clear_expenses(self):
@@ -67,6 +68,7 @@ class ExpenseTracker:
         line = ""
         with self._file_path.open("r") as f:
             line = f.readlines()[line_pos-1]
+            # Print confirmation after adding the expense
         return line.strip()
     
     def update_expense(self, line_pos: int, new_value: str)->bool:
